@@ -1,112 +1,79 @@
-<p align="center">
-    <a href="https://sylius.com" target="_blank">
-        <img src="https://demo.sylius.com/assets/shop/img/logo.png" />
-    </a>
-</p>
+A plugin that extends the Sylius new API: find products by slug, search for products, add stripe gateway...
 
-<h1 align="center">Plugin Skeleton</h1>
+This plugin is mandatory if you use the sylius next.js boilerplate
 
-<p align="center">Skeleton for starting Sylius plugins.</p>
+## Install and configure the Sylius API
 
-## Documentation
+- Install Sylius (https://docs.sylius.com/en/1.9/book/installation/installation.html) 
+- Install the Sylius Extra API Plugin has to be installed in order to use the theme:
 
-For a comprehensive guide on Sylius Plugins development please go to Sylius documentation,
-there you will find the <a href="https://docs.sylius.com/en/latest/plugin-development-guide/index.html">Plugin Development Guide</a>, that is full of examples.
+```
 
-## Quickstart Installation
+```
 
-1. Run `composer create-project sylius/plugin-skeleton ProjectName`.
+- If you want to use Stripe, create in your Stripe account a new payment_intent.succeeded hook, calling this URL: 
+https://yourSyliusAPIDomainName/api/v2/shop/payments/stripe/notify/success
+- Add this env variables into your .env.local file:
 
-2. From the plugin skeleton root directory, run the following commands:
+```
+# your stripe secret key
+STRIPE_SECRET_KEY=sk_test_51IWnwaGhkxw8ABpLx60ZYzWcq2ffcxLkDaFPtZULJtBDyjQgOnaTHABSCzzIrbEL34EnJj5eVPRZBDAjDC4mpTaV00KAZYhe3n
+# your stripe payment_intent.succeeded webhook secret key
+STRIPE_SUCCESS_ENDPOINT_SECRET_KEY=whsec_3jwQgifKzj8TKoOQGwASPdEdPbPvgxvq
+# the Next.js front end URL
+CLIENT_URL=
+# the front end url for the stripe payment success (by default "https://yourNextBoilerPlateThemeDomainName/cart/confirmation")
+CLIENT_URL_PAYMENT_SUCCESS=
+# the front end url for the stripe payment failure (by default "https://yourNextBoilerPlateThemeDomainName/cart/failed")
+CLIENT_URL_PAYMENT_FAILED=
+```
+- create a davidroberto_sylius_extra_plugin.yaml file in your config/packages file and import the plugin config file in it:
 
-    ```bash
-    $ (cd tests/Application && yarn install)
-    $ (cd tests/Application && yarn build)
-    $ (cd tests/Application && APP_ENV=test bin/console assets:install public)
-    
-    $ (cd tests/Application && APP_ENV=test bin/console doctrine:database:create)
-    $ (cd tests/Application && APP_ENV=test bin/console doctrine:schema:create)
-    ```
+```
+imports:
+    - { resource: "@DavidRobertoSyliusExtraApiPlugin/Resources/app/config/config.yml" }
+```
 
-To be able to setup a plugin's database, remember to configure you database credentials in `tests/Application/.env` and `tests/Application/.env.test`.
+- configure the nelmio cors bundle to match your next js frontend url
+- In your admin, in the "channel", set this values:
+-- ignore shipping selection step where only one shipping method exists: TRUE
+-- ignore payment selection step where only one payment method exists: TRUE
+-- the account verification is mandatory: false
 
-## Usage
+- In your admin, foreach product, set the variant selection method to "Variant choice"
 
-### Running plugin tests
+- configure the nelmio cors bundle to match your next js frontend url
 
-  - PHPUnit
+Important:
+- The theme don't work well yet with taxons slug containing slashes, so remove them if you want to test the theme.
+- Depending on yout nelmio cors configuration, the theme might not be able to perform the fetch request if you use https for your local sylius api url. You can fix it using http (only for localhost).
 
-    ```bash
-    vendor/bin/phpunit
-    ```
 
-  - PHPSpec
+## Install and configure the next.js boilerplate theme
 
-    ```bash
-    vendor/bin/phpspec run
-    ```
+- clone the Sylius next.js boilerplate theme: https://github.com/davidroberto/sylius-next-boilerplate-theme
+- fill the .env variables into a .env.local file
+```
+# Your Sylius API URL. Exemple: "https://yourSyliusAPIDomainName/api/v2/"
+NEXT_PUBLIC_API_RESOURCE_BASE_URL=
+# Your Sylius API base URL (without the /api/v2). Exemple: "https://yourSyliusAPIDomainName")
+NEXT_PUBLIC_API_PUBLIC_URL=
+# Your Sylius API Hostname (without the protocol). Exemple: "yourSyliusAPIDomainName"
+API_HOST_NAME=
+# your stripe public key
+NEXT_PUBLIC_STRIPE_PUBLIC_KEY=
+# Your Mailchimp Newsletter Form Action URL
+MAILCHIMP_URL=
+```
+- install the node modules: 
+```
+yarn install
+```
+- change the default locale in lib/config/locales.ts
+- launch the local dev server:
 
-  - Behat (non-JS scenarios)
+```
+yarn dev
+```
 
-    ```bash
-    vendor/bin/behat --strict --tags="~@javascript"
-    ```
-
-  - Behat (JS scenarios)
- 
-    1. [Install Symfony CLI command](https://symfony.com/download).
- 
-    2. Start Headless Chrome:
-    
-      ```bash
-      google-chrome-stable --enable-automation --disable-background-networking --no-default-browser-check --no-first-run --disable-popup-blocking --disable-default-apps --allow-insecure-localhost --disable-translate --disable-extensions --no-sandbox --enable-features=Metal --headless --remote-debugging-port=9222 --window-size=2880,1800 --proxy-server='direct://' --proxy-bypass-list='*' http://127.0.0.1
-      ```
-    
-    3. Install SSL certificates (only once needed) and run test application's webserver on `127.0.0.1:8080`:
-    
-      ```bash
-      symfony server:ca:install
-      APP_ENV=test symfony server:start --port=8080 --dir=tests/Application/public --daemon
-      ```
-    
-    4. Run Behat:
-    
-      ```bash
-      vendor/bin/behat --strict --tags="@javascript"
-      ```
-    
-  - Static Analysis
-  
-    - Psalm
-    
-      ```bash
-      vendor/bin/psalm
-      ```
-      
-    - PHPStan
-    
-      ```bash
-      vendor/bin/phpstan analyse -c phpstan.neon -l max src/  
-      ```
-
-  - Coding Standard
-  
-    ```bash
-    vendor/bin/ecs check src
-    ```
-
-### Opening Sylius with your plugin
-
-- Using `test` environment:
-
-    ```bash
-    (cd tests/Application && APP_ENV=test bin/console sylius:fixtures:load)
-    (cd tests/Application && APP_ENV=test bin/console server:run -d public)
-    ```
-    
-- Using `dev` environment:
-
-    ```bash
-    (cd tests/Application && APP_ENV=dev bin/console sylius:fixtures:load)
-    (cd tests/Application && APP_ENV=dev bin/console server:run -d public)
-    ```
+- it's done ! You can browse you shop!
