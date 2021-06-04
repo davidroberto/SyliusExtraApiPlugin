@@ -8,7 +8,7 @@ This plugin is mandatory if you use the sylius next.js boilerplate
 - Install the Sylius Extra API Plugin has to be installed in order to use the theme:
 
 ```
-
+composer require davidroberto/sylius-extra-api-plugin
 ```
 
 - If you want to use Stripe, create in your Stripe account a new payment_intent.succeeded hook, calling this URL: 
