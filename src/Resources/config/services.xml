@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+
+        <service id="sylius.api.product_enabled_filter" parent="api_platform.doctrine.orm.boolean_filter">
+            <argument type="collection">
+                <argument key="enabled">~</argument>
+            </argument>
+            <tag name="api_platform.filter"/>
+        </service>
+
+        <service id="sylius.api.product_variant_stock_filter" parent="api_platform.doctrine.orm.range_filter">
+            <argument type="collection">
+                <argument key="variants.onHand">~</argument>
+            </argument>
+            <tag name="api_platform.filter"/>
+        </service>
+
+        <service id="david_roberto.event.jwt_created_listener" class="DavidRoberto\SyliusExtraApiPlugin\EventListener\JWTCreatedListener">
+            <argument type="service" id="request_stack" />
+            <tag name="kernel.event_listener" event="lexik_jwt_authentication.on_jwt_created" method="onJWTCreated"/>
+        </service>
+
+        <service id="david_roberto.serializer.product_variant_serializer" class="DavidRoberto\SyliusExtraApiPlugin\Serializer\ProductVariantSerializer">
+            <argument type="service" id="api_platform.serializer.normalizer.item" />
+            <argument type="service" id="sylius.calculator.product_variant_price" />
+            <argument type="service" id="sylius.context.channel" />
+            <tag name="serializer.normalizer" priority="100"/>
+        </service>
+
+        <service id="Sylius\Component\User\Security\Generator\GeneratorInterface" alias="sylius.shop_user.token_generator.password_reset" />
+
+        <service id="Sylius\Bundle\ApiBundle\EventHandler\OrderCompletedHandler" class="DavidRoberto\SyliusExtraApiPlugin\EventHandler\OrderCompletedHandler">
+            <argument type="service" id="messenger.default_bus" />
+            <argument type="service" id="sylius.repository.order" />
+            <argument type="service" id="sylius.calculator.product_variant_price" />
+            <tag name="messenger.message_handler" bus="sylius_event.bus"/>
+        </service>
+
+        <service id="DavidRoberto\SyliusExtraApiPlugin\Controller\Api\GetProductBySlugController" public="true" autowire="true"/>
+        <service id="DavidRoberto\SyliusExtraApiPlugin\Controller\Api\GetCustomerUserByEmailController" public="true" autowire="true"/>
+        <service id="DavidRoberto\SyliusExtraApiPlugin\Controller\Api\ReinitPasswordController" public="true" autowire="true"/>
+        <service id="DavidRoberto\SyliusExtraApiPlugin\Controller\Api\ReinitPasswordRequestController" public="true" autowire="true"/>
+        <service id="DavidRoberto\SyliusExtraApiPlugin\Controller\Api\SearchProductsController" public="true" autowire="true"/>
+        <service id="DavidRoberto\SyliusExtraApiPlugin\Controller\Api\StripeCheckoutController" public="true" autowire="true"/>
+        <service id="DavidRoberto\SyliusExtraApiPlugin\Controller\Api\StripeNotifySuccessController" public="true" autowire="true"/>
+
+    </services>
+</container>

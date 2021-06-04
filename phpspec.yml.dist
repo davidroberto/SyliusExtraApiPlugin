@@ -1,0 +1,4 @@
+suites:
+    main:
+        namespace: DavidRoberto\SyliusExtraApiExtension
+        psr4_prefix: DavidRoberto\SyliusExtraApiExtension
