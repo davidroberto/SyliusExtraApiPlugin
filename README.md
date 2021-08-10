@@ -3,6 +3,10 @@ A plugin that extends the Sylius new API: find products by slug, search for prod
 This plugin is mandatory if you use the sylius next.js boilerplate (https://github.com/davidroberto/sylius-next-boilerplate-theme)
 This is the first version so there is a lot of room for improvements, bugfixes etc! 
 
+```
+composer require davidroberto/sylius-extra-api-plugin
+```
+
 ## Install and configure the Sylius API
 
 - Install Sylius (https://docs.sylius.com/en/1.9/book/installation/installation.html) 
@@ -11,7 +15,7 @@ This is the first version so there is a lot of room for improvements, bugfixes e
 
 ```
 imports:
-    - { resource: "@DavidRobertoSyliusExtraApiPlugin/Resources/app/config/config.yml" }
+    - { resource: "@DavidRobertoSyliusExtraApiPlugin/Resources/app/config.yml" }
 ```
 
 - If you want to use Stripe, create in your Stripe account a new "payment_intent.succeeded hook", calling this URL (replace the domain name with yours): 
