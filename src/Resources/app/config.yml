@@ -3,7 +3,7 @@ api_platform:
     paths:
       - '%kernel.project_dir%/vendor/sylius/sylius/src/Sylius/Bundle/ApiBundle/Resources/config/api_resources'
       - '%kernel.project_dir%/src/Entity'
-      - '%kernel.project_dir%/vendor/david-roberto/sylius-extra-api-plugin/src/Resources/config/api_platform'
+      - '%kernel.project_dir%/vendor/davidroberto/sylius-extra-api-plugin/src/Resources/config/api_platform'
 
 sylius_product:
   resources:
@@ -21,4 +21,4 @@ framework:
   serializer:
     mapping:
       paths:
-        - '%kernel.project_dir%/vendor/david-roberto/sylius-extra-api-plugin/src/Resources/config/serializer'
+        - '%kernel.project_dir%/vendor/davidroberto/sylius-extra-api-plugin/src/Resources/config/serializer'
