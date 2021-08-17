@@ -63,10 +63,28 @@
 
             <collectionOperation name="shop_search">
                 <attribute name="method">GET</attribute>
-                <attribute name="path">/shop/products/search/{search}</attribute>
+                <attribute name="path">/shop/products/search/{search}/{localeCode}</attribute>
                 <attribute name="controller">DavidRoberto\SyliusExtraApiPlugin\Controller\Api\SearchProductsController</attribute>
                 <attribute name="openapi_context">
                     <attribute name="summary">Search products</attribute>
+                    <attribute name="parameters">
+                        <attribute>
+                            <attribute name="name">search</attribute>
+                            <attribute name="in">path</attribute>
+                            <attribute name="required">false</attribute>
+                            <attribute name="schema">
+                                <attribute name="type">string</attribute>
+                            </attribute>
+                        </attribute>
+                         <attribute>
+                            <attribute name="name">localeCode</attribute>
+                            <attribute name="in">path</attribute>
+                            <attribute name="required">true</attribute>
+                            <attribute name="schema">
+                                <attribute name="type">string</attribute>
+                            </attribute>
+                        </attribute>
+                    </attribute>
                 </attribute>
                 <attribute name="normalization_context">
                     <attribute name="groups">shop:product:read</attribute>
