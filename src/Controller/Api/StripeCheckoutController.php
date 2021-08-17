@@ -49,7 +49,7 @@ class StripeCheckoutController
 
     public function __invoke() {
         $request = $this->requestStack->getCurrentRequest();
-        $orderToken = $request->get('id');
+        $orderToken = $request->get('tokenValue');
 
         Stripe::setApiKey($this->params->get('stripe_secret_key'));
 
