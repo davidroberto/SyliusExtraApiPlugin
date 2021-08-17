@@ -37,10 +37,10 @@ class GetProductBySlugController
 
     public function __invoke() {
         $request = $this->requestStack->getCurrentRequest();
-        $productSlug = $request->get('id');
-
+        $productSlug = $request->get('code');
+        $locale = $request->get('localeCode');
         $channel = $this->channelContext->getChannel();
-        return $this->productRepository->findOneByChannelAndSlug($channel, 'fr_FR', $productSlug);
+        return $this->productRepository->findOneByChannelAndSlug($channel, $locale, $productSlug);
     }
 
 }
