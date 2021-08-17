@@ -17,6 +17,26 @@ composer require davidroberto/sylius-extra-api-plugin
 imports:
     - { resource: "@DavidRobertoSyliusExtraApiPlugin/Resources/app/config.yml" }
 ```
+- Add paths in your config/packages/api_platform.yaml:
+
+```
+api_platform:
+    mapping:
+        paths:
+            ...
+            - "PATH_TO_SyliusExtraApiPlugin/src/Resources/config/api_platform"
+```
+- Add paths in your config/packages/framework.yaml:
+
+```
+framework:
+    ...
+    serializer:
+        mapping:
+            paths:
+                ...
+                -- "PATH_TO_SyliusExtraApiPlugin/src/Resources/config/serializer"
+```
 
 - If you want to use Stripe, create in your Stripe account a new "payment_intent.succeeded hook", calling this URL (replace the domain name with yours): 
 https://yourSyliusAPIDomainName/api/v2/shop/payments/stripe/notify/success
