@@ -53,6 +53,14 @@
                 </attribute>
             </collectionOperation>
 
+            <collectionOperation name="admin_post">
+                <attribute name="method">POST</attribute>
+                <attribute name="path">/admin/products</attribute>
+                <attribute name="denormalization_context">
+                    <attribute name="groups">admin:product:create</attribute>
+                </attribute>
+            </collectionOperation>
+
             <collectionOperation name="shop_search">
                 <attribute name="method">GET</attribute>
                 <attribute name="path">/shop/products/search/{search}</attribute>
@@ -69,16 +77,46 @@
             </collectionOperation>
 
 
-            <collectionOperation name="admin_post">
-                <attribute name="method">POST</attribute>
-                <attribute name="path">/admin/products</attribute>
-                <attribute name="denormalization_context">
-                    <attribute name="groups">admin:product:create</attribute>
-                </attribute>
-            </collectionOperation>
         </collectionOperations>
 
         <itemOperations>
+            
+
+            <itemOperation name="admin_get">
+                <attribute name="method">GET</attribute>
+                <attribute name="path">/admin/products/{code}</attribute>
+                <attribute name="openapi_context">
+                    <attribute name="summary">Use code to retrieve a product resource.</attribute>
+                </attribute>
+                <attribute name="normalization_context">
+                    <attribute name="groups">admin:product:read</attribute>
+                </attribute>
+            </itemOperation>
+
+            <itemOperation name="shop_get">
+                <attribute name="method">GET</attribute>
+                <attribute name="path">/shop/products/{code}</attribute>
+                <attribute name="openapi_context">
+                    <attribute name="summary">Use code to retrieve a product resource.</attribute>
+                </attribute>
+                <attribute name="normalization_context">
+                    <attribute name="groups">shop:product:read</attribute>
+                </attribute>
+            </itemOperation>
+
+            <itemOperation name="admin_put">
+                <attribute name="method">PUT</attribute>
+                <attribute name="path">/admin/products/{code}</attribute>
+                <attribute name="denormalization_context">
+                    <attribute name="groups">admin:product:update</attribute>
+                </attribute>
+            </itemOperation>
+
+            <itemOperation name="admin_delete">
+                <attribute name="method">DELETE</attribute>
+                <attribute name="path">/admin/products/{code}</attribute>
+            </itemOperation>
+
             <itemOperation name="shop_get_by_slug">
                 <attribute name="method">GET</attribute>
                 <attribute name="path">/shop/products/by-slug/{code}/{localeCode}</attribute>
@@ -102,41 +140,6 @@
                 <attribute name="defaults">
                     <attribute name="_api_receive">false</attribute>
                 </attribute>
-            </itemOperation>
-
-            <itemOperation name="admin_get">
-                <attribute name="method">GET</attribute>
-                <attribute name="path">/admin/products/{id}</attribute>
-                <attribute name="openapi_context">
-                    <attribute name="summary">Use code to retrieve a product resource.</attribute>
-                </attribute>
-                <attribute name="normalization_context">
-                    <attribute name="groups">admin:product:read</attribute>
-                </attribute>
-            </itemOperation>
-
-            <itemOperation name="shop_get">
-                <attribute name="method">GET</attribute>
-                <attribute name="path">/shop/products/{id}</attribute>
-                <attribute name="openapi_context">
-                    <attribute name="summary">Use code to retrieve a product resource.</attribute>
-                </attribute>
-                <attribute name="normalization_context">
-                    <attribute name="groups">shop:product:read</attribute>
-                </attribute>
-            </itemOperation>
-
-            <itemOperation name="admin_put">
-                <attribute name="method">PUT</attribute>
-                <attribute name="path">/admin/products/{id}</attribute>
-                <attribute name="denormalization_context">
-                    <attribute name="groups">admin:product:update</attribute>
-                </attribute>
-            </itemOperation>
-
-            <itemOperation name="admin_delete">
-                <attribute name="method">DELETE</attribute>
-                <attribute name="path">/admin/products/{id}</attribute>
             </itemOperation>
         </itemOperations>
 
@@ -164,5 +167,6 @@
         <property name="images" required="false" />
         <property name="mainTaxon" required="false" />
         <property name="variants" readable="true"/>
+        <property name="averageRating" readable="true" />
     </resource>
 </resources>
