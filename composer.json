@@ -1,5 +1,5 @@
 {
-    "name": "davidroberto/sylius-extra-api-plugin",
+    "name": "titi60/sylius-extra-api-plugin",
     "type": "sylius-plugin",
     "description": "Enhance the sylius API with new endpoints etc",
     "keywords": [
@@ -9,7 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3",
-        "sylius/sylius": "~1.8.0 || ~1.9.0",
+        "sylius/sylius": "~1.8.0 || ~1.9.0 || ~1.10.0",
         "nelmio/cors-bundle": "^2.1"
     },
     "conflict": {
