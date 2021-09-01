@@ -46,7 +46,7 @@ class SearchProductsController
     {
         $request = $this->requestStack->getCurrentRequest();
         $term = $request->get('search');
-        $locale = $this->localeContext->getLocaleCode();
+        $locale = $request->get('localeCode');
         $channel = $this->channelContext->getChannel();
 
         $products = $this->productRepository->searchByTerm($channel, $locale, $term);
