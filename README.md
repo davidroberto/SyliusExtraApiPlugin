@@ -24,9 +24,9 @@ https://yourSyliusAPIDomainName/api/v2/shop/payments/stripe/notify/success
 
 ```
 # your stripe secret key
-STRIPE_SECRET_KEY=sk_test_51IWnwaGhkxw8ABpLx60ZYzWcq2ffcxLkDaFPtZULJtBDyjQgOnaTHABSCzzIrbEL34EnJj5eVPRZBDAjDC4mpTaV00KAZYhe3n
+STRIPE_SECRET_KEY=xxxxxxx
 # your stripe payment_intent.succeeded webhook secret key
-STRIPE_SUCCESS_ENDPOINT_SECRET_KEY=whsec_3jwQgifKzj8TKoOQGwASPdEdPbPvgxvq
+STRIPE_SUCCESS_ENDPOINT_SECRET_KEY=xxxxxx
 # the Next.js front end URL
 CLIENT_URL=
 # the front end url for the stripe payment success (by default "https://yourNextBoilerPlateThemeDomainName/cart/confirmation")
